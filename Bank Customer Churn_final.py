@@ -30,7 +30,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 
 
-#%% Exploratory Data Analysis(EDA)
+#Exploratory Data Analysis(EDA)
 
 start_time = time.time()
 
@@ -42,38 +42,38 @@ print(data.tail())
 ''' Check the Dtype and if exist null '''
 print(data.info())
 ''' Observation：
-    Thankfully there's no null, so we don't need to deal with it. '''
+    Thankfully there was no null, so we didn't need to deal with it. '''
 
 ''' Check the narrative statistics and the data column '''
 print(data.describe())
 print(data.columns)
 
 ''' The detail about the dataset columns from kaggle:
-    RowNumber—corresponds to the record (row) number and has no effect on the output.
-    CustomerId—contains random values and has no effect on customer leaving the bank.
-    Surname—the surname of a customer has no impact on their decision to leave the bank.
+    RowNumber          — corresponds to the record (row) number and has no effect on the output.
+    CustomerId         — contains random values and has no effect on customer leaving the bank.
+    Surname            — the surname of a customer has no impact on their decision to leave the bank.
     
-    CreditScore—can have an effect on customer churn, since a customer with a higher credit score is less likely to leave the bank.
-    Geography—a customer’s location can affect their decision to leave the bank.
-    Gender—it’s interesting to explore whether gender plays a role in a customer leaving the bank.
-    Age—this is certainly relevant, since older customers are less likely to leave their bank than younger ones.
-    Tenure—refers to the number of years that the customer has been a client of the bank. Normally, older clients are more loyal and less likely to leave a bank.
-    Balance—also a very good indicator of customer churn, as people with a higher balance in their accounts are less likely to leave the bank compared to those with lower balances.
-    NumOfProducts—refers to the number of products that a customer has purchased through the bank.
-    HasCrCard—denotes whether or not a customer has a credit card. This column is also relevant, since people with a credit card are less likely to leave the bank.
-    IsActiveMember—active customers are less likely to leave the bank.
-    EstimatedSalary—as with balance, people with lower salaries are more likely to leave the bank compared to those with higher salaries.
-    Complain—customer has complaint or not.
-    Satisfaction Score—Score provided by the customer for their complaint resolution.
-    Card Type—type of card hold by the customer.
-    Points Earned—the points earned by the customer for using credit card.
+    CreditScore        — can have an effect on customer churn, since a customer with a higher credit score is less likely to leave the bank.
+    Geography          — a customer’s location can affect their decision to leave the bank.
+    Gender             — it’s interesting to explore whether gender plays a role in a customer leaving the bank.
+    Age                — this is certainly relevant, since older customers are less likely to leave their bank than younger ones.
+    Tenure             — refers to the number of years that the customer has been a client of the bank. Normally, older clients are more loyal and less likely to leave a bank.
+    Balance            — also a very good indicator of customer churn, as people with a higher balance in their accounts are less likely to leave the bank compared to those with lower balances.
+    NumOfProducts      — refers to the number of products that a customer has purchased through the bank.
+    HasCrCard          — denotes whether or not a customer has a credit card. This column is also relevant, since people with a credit card are less likely to leave the bank.
+    IsActiveMember     — active customers are less likely to leave the bank.
+    EstimatedSalary    — as with balance, people with lower salaries are more likely to leave the bank compared to those with higher salaries.
+    Complain           — customer has complaint or not.
+    Satisfaction Score — Score provided by the customer for their complaint resolution.
+    Card Type          — type of card hold by the customer.
+    Points Earned      — the points earned by the customer for using credit card.
     
-    Exited—whether or not the customer left the bank. '''    
+    Exited             — whether or not the customer left the bank. '''    
 ''' Observation：
     We can expect that "RowNumber", "CustomerId" and "Surname", 
     the three values aren't relevant to our goal, so we will remove them later.
     
-    Our goal is to except whether or not the client will leave the bank. 
+    Our goal is to expect whether or not the client will leave the bank. 
     So an observation of correlation between "Exited" and remaining values will be critical. '''
 
 
@@ -82,8 +82,7 @@ print(data.columns)
 ''' Geography '''
 print(data.groupby(['Geography', 'Exited'])['Exited'].count())
 plt.gca().set_title('Variable Geography')
-sns.countplot(x='Geography', hue='Exited', data=data)
-
+sns.countplot(x='Geography', hue='Exited', data=data.astype(str))
 ''' Observation：
     French tended to not leave the bank, and German was more likely leaving the bank. '''
 
@@ -92,7 +91,7 @@ print(data.groupby(['Gender', 'Exited'])['Exited'].count())
 f, ax = plt.subplots(1, 2, figsize=(18, 8))
 data[['Gender', 'Exited']].groupby(['Gender']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Exited vs Gender')
-sns.countplot('Gender', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='Gender', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Gender: Exited vs Staied')
 plt.show()
 ''' Observation：
@@ -103,31 +102,31 @@ print(data.groupby(['Tenure', 'Exited'])['Exited'].count())
 f, ax = plt.subplots(1, 2, figsize=(20, 8))
 data[['Tenure', 'Exited']].groupby(['Tenure']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Exited vs Tenure')
-sns.countplot('Tenure', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='Tenure', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Tenure: Exited vs Staied')
 plt.show()
 '''Observation：
-   It was surprising to find there was at least 15% people left the bank in every tenure. 
-   Exited rate decreased over tenure, but overall it was not quite significant.'''
+    It was surprising to find there was at least 15% people left the bank in every tenure. 
+    Exited rate decreased over tenure, but overall it was not quite significant.'''
 
 ''' NumOfProducts'''
 print(data.groupby(['NumOfProducts', 'Exited'])['Exited'].count())
 f, ax = plt.subplots(1, 2, figsize=(18, 8))
 data[['NumOfProducts', 'Exited']].groupby(['NumOfProducts']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Exited vs NumOfProducts')
-sns.countplot('NumOfProducts', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='NumOfProducts', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('NumOfProducts: Exited vs Staied')
 plt.show()
 '''Observation：
-   It was shocked that the truth was totally opposite with our intuition. 
-   The more products client have, the more they likely left the bank. '''
+    It was shocked that the truth was totally opposite with our intuition. 
+    The more products client have, the more they likely left the bank. '''
 
 ''' Satisfaction Score'''
 print(data.groupby(['Satisfaction Score', 'Exited'])['Exited'].count())
 f, ax = plt.subplots(1, 2, figsize=(20, 8))
 data[['Satisfaction Score', 'Exited']].groupby(['Satisfaction Score']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Exited vs Satisfaction Score')
-sns.countplot('Satisfaction Score', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='Satisfaction Score', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[0].set_title('Satisfaction Score: Exited vs Staied')
 plt.show()
 ''' Observation：
@@ -160,11 +159,11 @@ sns.histplot(x=data['Age'], kde=False, ax=ax[0])
 ax[0].set_title('Histplot Age', fontdict={'fontsize': 20})
 sns.boxplot(x=data["Age"], ax=ax[1])
 ax[1].set_title('Boxplot Age', fontdict={'fontsize': 20})
-sns.violinplot('Gender', 'Age', hue='Exited', data=data, split=True, ax=ax[2])
+sns.violinplot(x='Gender', y='Age', hue='Exited', data=data, split=True, ax=ax[2])
 plt.show()
 ''' Observation：
     Male and female trend are the same in the every age. 
-    The data show that every 10 ages increased would appear a leaving peak roughly since 30. 
+    The data showed that every 10 ages increased would appear a leaving peak roughly since 30. 
     The highest peak was on the 40 ages. Apart from this, the distribution was normal distribution approximately. '''
 
 ''' Balance '''
@@ -178,7 +177,7 @@ sns.boxplot(x=data["Balance"], ax=ax[1])
 ax[1].set_title('Boxplot Balance', fontdict={'fontsize': 20})
 plt.show()
 ''' Observation：
-    Most data was from 0 balance. The remaining data shows us a perfect normal distribution. '''
+    Most data was from 0 balance. The remaining data showed us a perfect normal distribution. '''
 
 ''' EstimatedSalary '''
 print('Highest EstimatedSalary was:', data['EstimatedSalary'].max())
@@ -191,7 +190,7 @@ sns.boxplot(x=data["EstimatedSalary"], ax=ax[1])
 ax[1].set_title('Boxplot EstimatedSalary', fontdict={'fontsize': 20})
 plt.show()
 ''' Observation：
-    EstimatedSalary looks like a uniform distribution. '''
+    EstimatedSalary looked like a uniform distribution. '''
     
 ''' Point Earned '''
 print('Highest Point Earned was:', data['Point Earned'].max())
@@ -204,40 +203,40 @@ sns.boxplot(x=data["Point Earned"], ax=ax[1])
 ax[1].set_title('Boxplot Point Earned', fontdict={'fontsize': 20})
 plt.show()
 ''' Observation：
-    It also looks like a uniform distribution. '''
+    It also looked like a uniform distribution. '''
 
 
 # Analysing The Discrete Feature
 
 ''' HasCrCard '''
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
-sns.barplot('HasCrCard', 'Exited', data=data, ax=ax[0])
+data[['HasCrCard', 'Exited']].groupby(['HasCrCard']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('HasCrCard vs Exited')
 sns.countplot(x='HasCrCard', hue='Exited', data=data, ax=ax[1])
 ax[1].set_title('Variable HasCrCard')
 plt.show()
 ''' Observation：
-    Whether having a credit card or not, it seems not affect the Exited Feature. '''
+    Whether having a credit card or not, it seemed not affect the Exited Feature. '''
 
 ''' IsActiveMember '''
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
-sns.barplot('IsActiveMember', 'Exited', data=data, ax=ax[0])
+data[['IsActiveMember', 'Exited']].groupby(['IsActiveMember']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('IsActiveMember vs Exited')
 sns.countplot(x='IsActiveMember', hue='Exited', data=data, ax=ax[1])
 ax[1].set_title('Variable IsActiveMember')
 plt.show()
 ''' Observation：
-    As our expectation, inactive member more likely to leave. '''
+    As our expectation, inactive members were more likely to leave. '''
 
 ''' Complain '''
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
-sns.barplot('Complain', 'Exited', data=data, ax=ax[0])
+data[['Complain', 'Exited']].groupby(['Complain']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Complain vs Exited')
 sns.countplot(x='Complain', hue='Exited', data=data, ax=ax[1])
 ax[1].set_title('Variable Complain')
 plt.show()
 ''' Observation：
-    Surprisingly, the Complain Feature and the Exited are almost 100% equal. 
+    Surprisingly, the Complain Feature and the Exited were almost 100% equal. 
     We have to remove the Complain Feature later, since the 100% equal are not healthy in ML. '''
 
 ''' Exited '''
@@ -245,12 +244,12 @@ f, ax = plt.subplots(1, 2, figsize=(18, 8))
 data['Exited'].value_counts().plot.pie(explode=[0, 0.1], autopct='%1.1f%%', ax=ax[0], shadow=True)
 ax[0].set_title('Exited')
 ax[0].set_ylabel('')
-sns.countplot('Exited', data=data, ax=ax[1])
+sns.countplot(x='Exited', data=data, ax=ax[1])
 ax[1].set_title('Exited')
 plt.show()
 ''' Observation：
     We observed that roughly 20% customers left the bank. 
-    However, we still need to dig into more to find insight. '''
+    However, we still needed to dig into more to find insight. '''
 
 
 # Analysing The Ordinal Feature
@@ -259,14 +258,14 @@ plt.show()
 f, ax = plt.subplots(1, 2, figsize=(18, 8))
 sns.countplot(x='Card Type', hue='Exited', data=data, ax=ax[0])
 ax[0].set_title('Variable Card Type')
-sns.barplot('Card Type', 'Exited', data= data, ax=ax[1])
+data[['Card Type', 'Exited']].groupby(['Card Type']).mean().plot.bar(ax=ax[1])
 ax[1].set_title('Card Type vs Exited')
 plt.show()
 ''' Observation：
-    Every level is much the same in Exited rate and number. '''
+    Every level was much the same in Exited rate and number. '''
 
 
-#%% Feature Engineering and Data Cleaning
+# Feature Engineering and Data Cleaning
  
 ''' Covert the object Dtype into numerical Dtype. '''
 print(np.unique(data['Geography']))
@@ -280,14 +279,14 @@ data['Card Type'].replace(['SILVER', 'GOLD', 'PLATINUM', 'DIAMOND'], [0,1,2,3], 
 data.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1, inplace=True)
 
 ''' Visualization
-    Next step, we are going to establish a chart of those values in order to understand
+    Next step, we were going to establish a chart of those values in order to understand
     how they affect each other. It will be a benefit to following modeling. '''
 sns.heatmap(data.corr(), annot=True, cmap='YlOrBr', fmt='.2f', linewidths=0.2)
 fig = plt.gcf()
 fig.set_size_inches(10, 8)
 plt.show()
 ''' Observation：
-    We can see that we have a 100% correlation between the Exited variable and the Complain variable as we expected before, 
+    We could see that we have a 100% correlation between the Exited variable and the Complain variable as we expected before, 
     so let's eliminate the Complain variable. '''
 
 ''' Delete the highly overlapping feature. '''
@@ -359,7 +358,7 @@ print(data['Point Earned_band'])
 data.drop(['CreditScore', 'Age', 'Balance', 'EstimatedSalary', 'Point Earned'], axis=1, inplace=True)
 
 
-#%% Predictive Modeling
+# Predictive Modeling
 
 ''' Separating features variables and the target variable. '''
 train, test = train_test_split(data, test_size=0.3, random_state=0, stratify=data['Exited'])
@@ -478,9 +477,11 @@ models = pd.DataFrame({'Model': ['Logistic Regression',
                                   acc_sgd]})
                                  
 print(models.sort_values(by='Score', ascending=False))
+''' Conclusion：
+    We found that the most precise was the Random Forest, the accuracy was up to 84.33%.
+    We will note this result and save these models for any future upgrade on the data.'''
 
-
-#%% Save & Restore
+# Save & Restore
 
 with open('Customer-Churn_Model.pickle', 'wb') as f:
   pickle.dump(acc_random_forest, f)
