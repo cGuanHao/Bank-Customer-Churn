@@ -30,7 +30,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 
 
-#Exploratory Data Analysis(EDA)
+#%% Exploratory Data Analysis(EDA)
 
 start_time = time.time()
 
@@ -83,6 +83,7 @@ print(data.columns)
 print(data.groupby(['Geography', 'Exited'])['Exited'].count())
 plt.gca().set_title('Variable Geography')
 sns.countplot(x='Geography', hue='Exited', data=data.astype(str))
+
 ''' Observation：
     French tended to not leave the bank, and German was more likely leaving the bank. '''
 
@@ -212,7 +213,7 @@ plt.show()
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
 data[['HasCrCard', 'Exited']].groupby(['HasCrCard']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('HasCrCard vs Exited')
-sns.countplot(x='HasCrCard', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='HasCrCard', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Variable HasCrCard')
 plt.show()
 ''' Observation：
@@ -222,7 +223,7 @@ plt.show()
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
 data[['IsActiveMember', 'Exited']].groupby(['IsActiveMember']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('IsActiveMember vs Exited')
-sns.countplot(x='IsActiveMember', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='IsActiveMember', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Variable IsActiveMember')
 plt.show()
 ''' Observation：
@@ -232,7 +233,7 @@ plt.show()
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
 data[['Complain', 'Exited']].groupby(['Complain']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Complain vs Exited')
-sns.countplot(x='Complain', hue='Exited', data=data, ax=ax[1])
+sns.countplot(x='Complain', hue='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Variable Complain')
 plt.show()
 ''' Observation：
@@ -244,7 +245,7 @@ f, ax = plt.subplots(1, 2, figsize=(18, 8))
 data['Exited'].value_counts().plot.pie(explode=[0, 0.1], autopct='%1.1f%%', ax=ax[0], shadow=True)
 ax[0].set_title('Exited')
 ax[0].set_ylabel('')
-sns.countplot(x='Exited', data=data, ax=ax[1])
+sns.countplot(x='Exited', data=data.astype(str), ax=ax[1])
 ax[1].set_title('Exited')
 plt.show()
 ''' Observation：
@@ -256,7 +257,7 @@ plt.show()
 
 ''' Card Type '''
 f, ax = plt.subplots(1, 2, figsize=(18, 8))
-sns.countplot(x='Card Type', hue='Exited', data=data, ax=ax[0])
+sns.countplot(x='Card Type', hue='Exited', data=data.astype(str), ax=ax[0])
 ax[0].set_title('Variable Card Type')
 data[['Card Type', 'Exited']].groupby(['Card Type']).mean().plot.bar(ax=ax[1])
 ax[1].set_title('Card Type vs Exited')
@@ -265,7 +266,7 @@ plt.show()
     Every level was much the same in Exited rate and number. '''
 
 
-# Feature Engineering and Data Cleaning
+#%% Feature Engineering and Data Cleaning
  
 ''' Covert the object Dtype into numerical Dtype. '''
 print(np.unique(data['Geography']))
@@ -358,7 +359,7 @@ print(data['Point Earned_band'])
 data.drop(['CreditScore', 'Age', 'Balance', 'EstimatedSalary', 'Point Earned'], axis=1, inplace=True)
 
 
-# Predictive Modeling
+#%% Predictive Modeling
 
 ''' Separating features variables and the target variable. '''
 train, test = train_test_split(data, test_size=0.3, random_state=0, stratify=data['Exited'])
@@ -481,10 +482,10 @@ print(models.sort_values(by='Score', ascending=False))
     We found that the most precise was the Random Forest, the accuracy was up to 84.33%.
     We will note this result and save these models for any future upgrade on the data.'''
 
-# Save & Restore
+#%% Save & Restore
 
 with open('Customer-Churn_Model.pickle', 'wb') as f:
-  pickle.dump(acc_random_forest, f)
+    pickle.dump(acc_random_forest, f)
 print('Saving done')
 
 end_time = time.time()
