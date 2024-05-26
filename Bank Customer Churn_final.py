@@ -77,7 +77,7 @@ print(data.columns)
     So an observation of correlation between "Exited" and remaining values will be critical. '''
 
 
-# Analysing The Categorical Feature
+# Analyzing The Categorical Feature
 
 ''' Geography '''
 print(data.groupby(['Geography', 'Exited'])['Exited'].count())
@@ -128,13 +128,13 @@ f, ax = plt.subplots(1, 2, figsize=(20, 8))
 data[['Satisfaction Score', 'Exited']].groupby(['Satisfaction Score']).mean().plot.bar(ax=ax[0])
 ax[0].set_title('Exited vs Satisfaction Score')
 sns.countplot(x='Satisfaction Score', hue='Exited', data=data.astype(str), ax=ax[1])
-ax[0].set_title('Satisfaction Score: Exited vs Staied')
+ax[1].set_title('Satisfaction Score: Exited vs Staied')
 plt.show()
 ''' Observation：
     It was different from our expectation, the higher score could not prevent people left the bank. '''
 
 
-# Analysing The Continous Feature
+# Analyzing The Continous Feature
 
 ''' CreditScore '''
 print('Highest CreditScore was:', data['CreditScore'].max())
@@ -161,6 +161,7 @@ ax[0].set_title('Histplot Age', fontdict={'fontsize': 20})
 sns.boxplot(x=data["Age"], ax=ax[1])
 ax[1].set_title('Boxplot Age', fontdict={'fontsize': 20})
 sns.violinplot(x='Gender', y='Age', hue='Exited', data=data, split=True, ax=ax[2])
+ax[2].set_title('Violinplot Gender and Age', fontdict={'fontsize': 20})
 plt.show()
 ''' Observation：
     Male and female trend are the same in the every age. 
@@ -207,7 +208,7 @@ plt.show()
     It also looked like a uniform distribution. '''
 
 
-# Analysing The Discrete Feature
+# Analyzing The Discrete Feature
 
 ''' HasCrCard '''
 f, ax = plt.subplots(1, 2, figsize=(23, 8))
@@ -253,7 +254,7 @@ plt.show()
     However, we still needed to dig into more to find insight. '''
 
 
-# Analysing The Ordinal Feature
+# Analyzing The Ordinal Feature
 
 ''' Card Type '''
 f, ax = plt.subplots(1, 2, figsize=(18, 8))
