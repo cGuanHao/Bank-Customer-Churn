@@ -162,6 +162,7 @@ sns.boxplot(x=data["Age"], ax=ax[1])
 ax[1].set_title('Boxplot Age', fontdict={'fontsize': 20})
 sns.violinplot(x='Gender', y='Age', hue='Exited', data=data, split=True, ax=ax[2])
 ax[2].set_title('Violinplot Gender and Age', fontdict={'fontsize': 20})
+
 plt.show()
 ''' Observation：
     Male and female trend are the same in the every age. 
@@ -318,6 +319,8 @@ data.loc[(data['Age']>35) & (data['Age']<=40), 'Age_band'] = 2
 data.loc[(data['Age']>40) & (data['Age']<=46), 'Age_band'] = 3
 data.loc[data['Age']>46, 'Age_band'] = 4
 print(data['Age_band'])
+''' Explanation：
+    We simply divided into 5 equal parts.'''
 
 ''' Balance_band '''
 data['Balance_band'] = pd.cut(data['Balance'], 4)
@@ -390,14 +393,14 @@ rbf_SVM = svm.SVC(kernel='rbf', C=1, gamma=0.1)
 rbf_SVM.fit(train_X, train_Y)
 pred_rbf_SVM = rbf_SVM.predict(test_X)
 acc_rbf = round(metrics.accuracy_score(pred_rbf_SVM, test_Y)*100, 2)
-print('Accuracy for rbf SVM is ', acc_rbf)
+print('Accuracy for rbf-SVM is ', acc_rbf)
 
 # Linear Support Vector Machine(linear-SVM)
 linear_SVM = svm.SVC(kernel='linear', C=0.1, gamma=0.1)
 linear_SVM.fit(train_X, train_Y)
 pred_linear_SVM = linear_SVM.predict(test_X)
 acc_linear = round(metrics.accuracy_score(pred_linear_SVM, test_Y)*100, 2)
-print('Accuracy for linear SVM is', acc_linear)
+print('Accuracy for linear-SVM is', acc_linear)
 
 # Random Forest
 random_forest = RandomForestClassifier(n_estimators=100)
@@ -482,10 +485,10 @@ models = pd.DataFrame({'Model': ['Logistic Regression',
                                  
 print(models.sort_values(by='Score', ascending=False))
 ''' Conclusion：
-    We found that the most precise was the Random Forest, the accuracy was up to 84.33%.
+    We found that the most precise was the Random Forest, the accuracy was up to 84.40%.
     We will note this result and save these models for any future upgrade on the data.'''
 
-#%% Save & Restore
+# %% Save & Restore
 
 with open('Customer-Churn_Model.pickle', 'wb') as f:
     pickle.dump(acc_random_forest, f)
