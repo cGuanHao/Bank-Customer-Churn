@@ -303,6 +303,8 @@ data.loc[(data['CreditScore']>=670) & (data['CreditScore']<=739), 'CreditScore_b
 data.loc[(data['CreditScore']>=740) & (data['CreditScore']<=799), 'CreditScore_band'] = 3
 data.loc[data['CreditScore']>=800, 'CreditScore_band'] = 4
 print(data['CreditScore_band'])
+''' Explanation：
+    We refereed to the credit score ranges of FICO.'''
 
 ''' Age_band '''
 data['Age_band'] = pd.qcut(data['Age'], 5)
