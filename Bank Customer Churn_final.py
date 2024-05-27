@@ -426,7 +426,7 @@ print('Accuracies for different values of n are:', a.values, 'with the max value
 ''' The max accuracy value is 80.23 '''
 
 # knn = KNeighborsClassifier()
-knn = KNeighborsClassifier(n_neighbors=11)
+knn = KNeighborsClassifier(n_neighbors=8)
 knn.fit(train_X, train_Y)
 pred_knn = knn.predict(test_X)
 acc_knn = round(metrics.accuracy_score(pred_knn, test_Y)*100, 2)
